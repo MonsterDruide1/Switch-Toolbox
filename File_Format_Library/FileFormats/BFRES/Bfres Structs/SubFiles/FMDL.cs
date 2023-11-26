@@ -564,6 +564,34 @@ namespace Bfres.Structs
                     break;
             }
         }
+        public void ExportSilent(string FileName)
+        {
+            string ext = System.IO.Path.GetExtension(FileName);
+            ext = ext.ToLower();
+
+            if (ModelU != null)
+                BfresWiiU.SetModel(this);
+            else
+                BfresSwitch.SetModel(this);
+
+            switch (ext)
+            {
+                case ".bfmdl":
+                    if (GetResFileU() != null)
+                        ModelU.Export(FileName, GetResFileU());
+                    else
+                        Model.Export(FileName, GetResFile());
+                    break;
+                case ".obj":
+                    OBJ.ExportModel(FileName, this, GetTextures());
+                    break;
+                default:
+                    var settings = new ExportModelSettings().Settings;
+                    settings.SuppressConfirmDialog = true;
+                    DAE.Export(FileName, settings, this, GetTextures(), Skeleton, Skeleton.Node_Array.ToList());
+                    break;
+            }
+        }
 
         private List<STGenericTexture> GetTextures()
         {

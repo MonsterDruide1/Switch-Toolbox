@@ -990,6 +990,23 @@ namespace FirstPlugin
             return null;
         }
 
+        public TreeNodeCollection GetSkeletalAnims()
+        {
+            foreach (var folder in Nodes)
+            {
+                if (folder is BFRESAnimFolder)
+                {
+                    foreach (var node in ((BFRESAnimFolder)folder).Nodes)
+                    {
+                        if (node is BFRESGroupNode && ((BFRESGroupNode)node).Type == BRESGroupType.SkeletalAnim)
+                            return ((BFRESGroupNode)node).Nodes;
+                    }
+                }
+            }
+
+            return null;
+        }
+
         public List<STGenericTexture> GetTextures()
         {
             List<STGenericTexture> textures = new List<STGenericTexture>();

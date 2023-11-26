@@ -10,6 +10,9 @@ using System.Runtime.InteropServices;
 using System.Reflection;
 using Microsoft.VisualBasic.ApplicationServices;
 using Toolbox.Library;
+using FirstPlugin;
+using CafeLibrary.M2;
+using Bfres.Structs;
 
 namespace Toolbox
 {
@@ -19,8 +22,9 @@ namespace Toolbox
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static int Main()
         {
+            Console.WriteLine("STARTING!");
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             Application.EnableVisualStyles();
@@ -29,50 +33,88 @@ namespace Toolbox
 
             string[] args = Environment.GetCommandLineArgs();
 
-            List<string> Files = new List<string>();
+            List<string> Args = new List<string>();
             foreach (var arg in args)
             {
                 if (arg != Application.ExecutablePath)
-                    Files.Add(arg);
+                    Args.Add(arg);
             }
 
-            try
+            if(Args.Count < 1)
             {
-                Config.StartupFromFile(Runtime.ExecutableDir + "\\config.xml");
-                Config.GamePathsFromFile(Runtime.ExecutableDir + "\\config_paths.xml");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to load config file! {ex}");
+                Console.WriteLine("Usage: toolbox.exe <action> <args>");
+                return 1;
             }
 
-            var domain = AppDomain.CurrentDomain;
-            domain.AssemblyResolve += LoadAssembly;
-
-            bool LoadedDX = TryLoadDirectXTex();
-            if (!LoadedDX && !Toolbox.Library.Runtime.UseDirectXTexDecoder)
+            String action = Args[0];
+            Args.RemoveAt(0);
+            switch(action)
             {
-                var result = MessageBox.Show("Direct X Tex Failed to load! Make sure to install Visual C++ and Direct X Tex. Do you want to go to the install sites?", "", MessageBoxButtons.YesNo);
-                if (result == DialogResult.Yes)
-                {
-                    System.Diagnostics.Process.Start("https://support.microsoft.com/en-us/help/2977003/the-latest-supported-visual-c-downloads");
-                    System.Diagnostics.Process.Start("https://www.microsoft.com/en-us/download/details.aspx?id=35");
-                }
+                case "model":
+                    {
+                        if (Args.Count != 3)
+                        {
+                            Console.WriteLine("Usage: toolbox.exe model <src.bfres.zs> <name> <dest.dae> ; got: " + Args.Count + " args");
+                            return 1;
+                        }
+
+                        byte[] decomp = Zstb.SDecompress(File.ReadAllBytes(Args[0]));
+                        BFRES bfres = new BFRES();
+                        bfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(decomp)));
+                        foreach (Bfres.Structs.FMDL model in bfres.GetModels())
+                        {
+                            if (model.Model.Name.Equals(Args[1]))
+                            {
+                                model.ExportSilent(Args[2]);
+                                Console.WriteLine("Found, successfully converted!");
+                                return 0;
+                            }
+                        }
+                        Console.WriteLine("Couldn't find model named " + Args[1]);
+                        return 1;
+                    }
+                case "anim":
+                    {
+                        if (Args.Count != 3)
+                        {
+                            Console.WriteLine("Usage: toolbox.exe model <src.bfres.zs> <name> <dest.smd> ; got: " + Args.Count + " args");
+                            return 1;
+                        }
+
+                        // load BFRES file
+                        byte[] decomp = Zstb.SDecompress(File.ReadAllBytes(Args[0]));
+                        BFRES bfres = new BFRES();
+                        bfres.BFRESRender = new BFRESRender();
+                        bfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(decomp)));
+
+                        // prepare BFRESRender to make auto-selecting skeleton for animation possible
+                        var Models = bfres.GetModels();
+                        if (Models != null)
+                        {
+                            foreach (FMDL mdl in Models)
+                            {
+                                bfres.BFRESRender.models.Add(mdl);
+                            }
+                        }
+
+                        // search and export animation
+                        foreach (Bfres.Structs.FSKA anim in bfres.GetSkeletalAnims())
+                        {
+                            if (anim.SkeletalAnim.Name.Equals(Args[1]))
+                            {
+                                anim.Export(Args[2]);
+                                Console.WriteLine("Found, successfully converted!");
+                                return 0;
+                            }
+                        }
+                        Console.WriteLine("Couldn't find model named " + Args[1]);
+                        return 1;
+                    }
+                default:
+                    Console.WriteLine("Unknown action: " + action);
+                    return 1;
             }
 
-            MainForm.LoadConfig();
-
-            if (Toolbox.Library.Runtime.UseSingleInstance)
-            {
-                SingleInstanceController controller = new SingleInstanceController();
-                controller.Run(args);
-            }
-            else
-            {
-                MainForm form = new MainForm();
-                form.OpenedFiles = Files;
-                Application.Run(form);
-            }
         }
 
         [ComVisible(true), ComImport, Guid("000214eb-0000-0000-c000-000000000046"),
