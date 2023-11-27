@@ -431,7 +431,6 @@ namespace Bfres.Structs
             if (bitmap == null)
                 return; //Image is likely disposed and not needed to be applied
 
-            Console.WriteLine(texture.Name + " mipCount "+ mipCount);
             texture.MipCount = mipCount;
             texture.MipOffsets = new uint[mipCount];
 
@@ -533,7 +532,6 @@ namespace Bfres.Structs
             if (!IsEdited && !IsReplaced && Tex1 != null && Tex1.Contains(".Tex1"))
             {
                 string Tex2 = Tex1.Replace(".Tex1", ".Tex2");
-                Console.WriteLine(Tex2 + " " + System.IO.File.Exists(Tex2) + " " + texture.Name);
 
                 if (System.IO.File.Exists(Tex2))
                 {
@@ -554,8 +552,6 @@ namespace Bfres.Structs
         {
             if (ResFileTexture2 == null || IsEdited || IsReplaced)
                 return;
-
-            Console.WriteLine((ResFileTexture2.Textures.ContainsKey(texture.Name)));
 
             if (ResFileTexture2.Textures.ContainsKey(texture.Name))
             {

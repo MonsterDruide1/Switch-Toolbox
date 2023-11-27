@@ -972,10 +972,6 @@ namespace FirstPlugin
 
             var folder = folders.FirstOrDefault(x => x.hash == directoryHash);
 
-            Console.WriteLine($"{fullPath} FilePathHash {fullPathHash}");
-            Console.WriteLine($"{directoryPath} FolderHash {directoryHash} directoryHash {directoryHash}");
-            Console.WriteLine($"{filePath} fileHash {fileHash} isFileHash {isFileHash}");
-
             if (folder != null)
             {
                 folder.hashes.Add(new HashIndex()

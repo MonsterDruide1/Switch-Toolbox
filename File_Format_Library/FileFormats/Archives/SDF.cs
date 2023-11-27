@@ -330,8 +330,6 @@ namespace FirstPlugin
                                         Data.Add(SDFParent.block2Array[DdsType].Data.Take((int)0x80).ToArray());
                                     }
                                 }
-
-                                Console.WriteLine("UsedBytes " + SDFParent.block2Array[DdsType].UsedBytes + " IsSwizzled " + IsSwizzled);
                             }
 
                             for (var i = 0; i < CompressedSizes.Count; i++)

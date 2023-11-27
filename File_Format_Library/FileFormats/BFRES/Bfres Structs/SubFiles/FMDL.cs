@@ -814,14 +814,10 @@ namespace Bfres.Structs
                             if (csvsettings.CreateDummyLODs)
                                 shape.GenerateDummyLODMeshes();
 
-                            Console.WriteLine($"ForceSkinInfluence {ForceSkinInfluence}");
-
                             if (!ForceSkinInfluence)
                                 shape.VertexSkinCount = obj.GetMaxSkinInfluenceCount();
                             else
                                 shape.VertexSkinCount = (byte)ForceSkinInfluenceMax;
-
-                            Console.WriteLine($"VertexSkinCount { shape.VertexSkinCount}");
 
                             if (shape.VertexSkinCount == 1)
                             {
@@ -1394,8 +1390,6 @@ namespace Bfres.Structs
                     }
                     break;
             }
-
-            Console.WriteLine("Updating Vertex Data");
 
             if (IsEdited)
                 UpdateVertexData();

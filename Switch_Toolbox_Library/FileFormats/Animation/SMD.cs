@@ -165,10 +165,6 @@ namespace Toolbox.Library.Animations
                         prevframe = frame;
                         frame = int.Parse(args[1]);
 
-                        /*if (frame != prevframe + 1) {
-							Console.WriteLine ("Needs interpolation " + frame);
-						}*/
-
                         k = new Animation.KeyFrame();
                         k.Frame = frame;
                         //a.addKeyframe(k);

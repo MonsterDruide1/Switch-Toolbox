@@ -228,7 +228,7 @@ namespace Toolbox.Library
 
                         mipOffset += mipSize;
                     }
-
+                    
                     arrayOffset += (uint)(ImageData.Length / texture.ArrayCount);
                 }
             }

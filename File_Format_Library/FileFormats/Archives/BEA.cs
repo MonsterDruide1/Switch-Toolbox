@@ -84,8 +84,6 @@ namespace FirstPlugin
 
                     foreach (string file in Directory.GetFiles(folderPath))
                     {
-                        Console.WriteLine(file);
-
                         if (Path.GetExtension(file) == ".bea")
                         {
                             BEA bea = STFileLoader.OpenFileFormat(file) as BEA;

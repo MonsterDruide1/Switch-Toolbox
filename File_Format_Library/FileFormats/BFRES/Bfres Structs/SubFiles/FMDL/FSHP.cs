@@ -1133,7 +1133,6 @@ namespace Bfres.Structs
                         }
                         else if (bone.SmoothMatrixIndex != -1)
                         {
-                            STConsole.WriteLine(bone.SmoothMatrixIndex + " mesh " + Text + " bone " + bn);
                             v.boneIds.Add(bone.SmoothMatrixIndex);
                         }
                         else
@@ -2210,20 +2209,6 @@ namespace Bfres.Structs
                 };
 
                 displayVertList.Add(displayVert);
-
-
-                /*   Console.WriteLine($"---------------------------------------------------------------------------------------");
-                   Console.WriteLine($"Position   {displayVert.pos.X} {displayVert.pos.Y} {displayVert.pos.Z}");
-                   Console.WriteLine($"Normal     {displayVert.nrm.X} {displayVert.nrm.Y} {displayVert.nrm.Z}");
-                   Console.WriteLine($"Binormal   {displayVert.bit.X} {displayVert.bit.Y} {displayVert.bit.Z}");
-                   Console.WriteLine($"Tanget     {displayVert.tan.X} {displayVert.tan.Y} {displayVert.tan.Z}");
-                   Console.WriteLine($"Color      {displayVert.col.X} {displayVert.col.Y} {displayVert.col.Z} {displayVert.col.W}");
-                   Console.WriteLine($"UV Layer 1 {displayVert.uv.X} {displayVert.uv.Y}");
-                   Console.WriteLine($"UV Layer 2 {displayVert.uv2.X} {displayVert.uv2.Y}");
-                   Console.WriteLine($"UV Layer 3 {displayVert.uv3.X} {displayVert.uv3.Y}");
-                   Console.WriteLine($"Bone Index {displayVert.node.X} {displayVert.node.Y} {displayVert.node.Z} {displayVert.node.W}");
-                   Console.WriteLine($"Weights    {displayVert.weight.X} {displayVert.weight.Y} {displayVert.weight.Z} {displayVert.weight.W}");
-                   Console.WriteLine($"---------------------------------------------------------------------------------------");*/
             }
 
             return displayVertList;

@@ -68,11 +68,6 @@ namespace FirstPlugin
                 uint FileTableLength = reader.ReadUInt32();
                 uint FileDataOffset = reader.ReadUInt32();
 
-                Console.WriteLine("Version " + Version);
-                Console.WriteLine("FileTableOffset " + FileTableOffset);
-                Console.WriteLine("FileTableLength " + FileTableLength);
-                Console.WriteLine("FileDataOffset " + FileDataOffset);
-
                 uint endOfTable = FileDataOffset + FileTableLength;
 
                 List<NodeEntry> entries = new List<NodeEntry>();

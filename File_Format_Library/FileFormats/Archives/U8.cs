@@ -113,8 +113,6 @@ namespace FirstPlugin
                 uint FileDataOffset = reader.ReadUInt32();
                 byte[] Reserved = new byte[4];
 
-                Console.WriteLine("FirstNodeOffset " + FirstNodeOffset);
-
                 reader.SeekBegin(FirstNodeOffset);
                 var RootNode = new NodeEntry();
                 RootNode.Read(reader);

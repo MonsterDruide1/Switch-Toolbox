@@ -396,18 +396,11 @@ namespace FirstPlugin
         private static void SearchForBinaryContainerFile(FileReader reader, int Alignment, List<BNTX> Containers)
         {
             long StartPos = reader.Position;
-
-            Console.WriteLine("StartPos " + StartPos);
-
             uint TotalSize = (uint)reader.BaseStream.Length;
-
-            Console.WriteLine("TotalSize " + TotalSize);
 
             //Get file size in header
             reader.SeekBegin(StartPos + 28);
             uint FileSize = reader.ReadUInt32();
-
-            Console.WriteLine("FileSize " + FileSize);
 
             //Create bntx for array
             BNTX bntx = new BNTX();
@@ -420,8 +413,6 @@ namespace FirstPlugin
             byte[] Data = reader.ReadBytes((int)FileSize);
             bntx.Load(new MemoryStream(Data));
             Containers.Add(bntx);
-
-            Console.WriteLine("File Container " + bntx.Text + " " + StartPos);
 
             reader.SeekBegin(StartPos + FileSize);
             if (TotalSize > FileSize)
@@ -1544,8 +1535,6 @@ namespace FirstPlugin
             TEX_FORMAT DefaultFormat = TEX_FORMAT.BC1_UNORM_SRGB, SurfaceDim surfaceDim = SurfaceDim.Dim2D,
             int alignment = 512) 
         {
-            Console.WriteLine("surfaceDim" + surfaceDim);
-
             string ext = Path.GetExtension(FileName);
             ext = ext.ToLower();
 
@@ -1771,7 +1760,6 @@ namespace FirstPlugin
                             if (TegraX1Swizzle.pow2_round_up(TegraX1Swizzle.DIV_ROUND_UP(height, blkWidth)) < linesPerBlockHeight)
                                 blockHeightShift += 1;
 
-                            Console.WriteLine($"{width} {height} {depth} {blkWidth} {blkHeight} {blkDepth} {target} {bpp} {Texture.TileMode} {(int)Math.Max(0, Texture.BlockHeightLog2 - blockHeightShift)} {Texture.TextureData[arrayLevel][mipLevel].Length}");
                             byte[] result = TegraX1Swizzle.deswizzle(width, height, depth, blkWidth, blkHeight, blkDepth, target, bpp, (uint)Texture.TileMode, (int)Math.Max(0, Texture.BlockHeightLog2 - blockHeightShift), Texture.TextureData[arrayLevel][mipLevel]);
                             //Create a copy and use that to remove uneeded data
                             byte[] result_ = new byte[size];

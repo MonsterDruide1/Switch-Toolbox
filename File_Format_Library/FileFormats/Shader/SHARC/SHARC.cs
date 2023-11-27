@@ -125,7 +125,6 @@ namespace FirstPlugin
                 writer.Write(1);
                 writer.Write(Name.Length);
                 writer.WriteString(Name);
-                Console.WriteLine("pos " + writer.Position);
                 long sourceArrayPos = writer.Position;
                 writer.Write(uint.MaxValue);
                 writer.Write(ShaderPrograms.Count);

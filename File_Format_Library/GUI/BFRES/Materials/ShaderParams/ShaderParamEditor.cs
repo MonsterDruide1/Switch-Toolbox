@@ -378,8 +378,6 @@ namespace FirstPlugin.Forms
                     break;
             }
 
-            Console.WriteLine(String.Format("{0,-30} {1,-30}", param.Name, Values));
-
             return Values;
         }
 

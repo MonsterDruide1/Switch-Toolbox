@@ -124,7 +124,6 @@ namespace DKCTF
 
                 JointSets.Add(jointSet);
             }
-            Console.WriteLine();
         }
 
         public STSkeleton ToGenericSkeleton()

@@ -134,7 +134,6 @@ namespace FirstPlugin
             } //Reference node
             else if (node is YamlScalarNode && ((YamlScalarNode)node).Value.Contains("!refTag=")) {
                 string tag = ((YamlScalarNode)node).Value.Replace("!refTag=", string.Empty);
-                Console.WriteLine($"refNode {tag} {ReferenceNodes.ContainsKey(tag)}");
                 if (ReferenceNodes.ContainsKey(tag))
                     return ReferenceNodes[tag];
                 else {

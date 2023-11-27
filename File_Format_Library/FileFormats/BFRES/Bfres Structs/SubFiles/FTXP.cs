@@ -88,11 +88,6 @@ namespace Bfres.Structs
                         Animation.KeyGroup keyGroup = CurveHelper.CreateTrackWiiU(matanim.Curves[index], true);
                         sampler.AnimDataOffset = matanim.Curves[index].AnimDataOffset;
                         sampler.Keys = keyGroup.Keys;
-
-                        foreach (var ind in keyGroup.Keys)
-                        {
-                            Console.WriteLine($"{SamplerInfo.Name} {ind.Value}");
-                        }
                     }
                 }
             }

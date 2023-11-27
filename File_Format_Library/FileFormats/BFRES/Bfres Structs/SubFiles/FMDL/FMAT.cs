@@ -654,7 +654,6 @@ namespace Bfres.Structs
                     throw new ArgumentException($"Invalid {nameof(ShaderParamType)} {Type}.",
                nameof(Type));
             }
-            Console.WriteLine("PaddingLength " + PaddingLength);
             if (PaddingLength > 0)
                 writer.Write(new byte[PaddingLength]);
         }

@@ -98,7 +98,6 @@ namespace FirstPlugin
                     enumType = Type.GetType(member.DeclaringType.FullName + "+" + member.Name);
                     if (enumType.IsEnum)
                     {
-                        Console.WriteLine(member.Name);
                         if (member.Name == RenderInfoName)
                         {
                             arrEnumNames = enumType.GetEnumNames();

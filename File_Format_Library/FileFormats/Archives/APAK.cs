@@ -207,8 +207,6 @@ namespace FirstPlugin
                 Unknown3 = reader.ReadUInt32();
                 FileName = reader.ReadString(0x20, true);
 
-                Console.WriteLine($"{Utils.GetExtension(FileName)} {Alignment}");
-
                 long endpos = reader.Position;
 
                 reader.Seek(DataOffset, System.IO.SeekOrigin.Begin);

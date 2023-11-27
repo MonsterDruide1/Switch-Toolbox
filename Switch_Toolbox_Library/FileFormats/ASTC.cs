@@ -133,10 +133,6 @@ namespace Toolbox.Library
                 reader.Seek(0x10, System.IO.SeekOrigin.Begin);
                 DataBlock = reader.ReadBytes((int)(reader.BaseStream.Length - reader.Position));
 
-                Console.WriteLine(Width);
-                Console.WriteLine(Height);
-                Console.WriteLine(Depth);
-
                 if (BlockDimX == 4 && BlockDimY == 4)
                     Format = TEX_FORMAT.ASTC_4x4_UNORM;
                 else if (BlockDimX == 5 && BlockDimY == 4)

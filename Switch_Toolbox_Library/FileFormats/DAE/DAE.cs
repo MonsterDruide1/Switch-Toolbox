@@ -288,7 +288,6 @@ namespace Toolbox.Library
                     if (mesh.MaterialIndex != -1 && Materials.Count > mesh.MaterialIndex)
                     {
                         writer.CurrentMaterial = Materials[mesh.MaterialIndex].Text;
-                        Console.WriteLine($"MaterialIndex {mesh.MaterialIndex } {Materials[mesh.MaterialIndex].Text}");
                     }
 
 

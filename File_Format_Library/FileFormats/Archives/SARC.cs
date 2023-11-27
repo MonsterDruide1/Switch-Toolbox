@@ -253,7 +253,6 @@ namespace FirstPlugin
             sarcData.Files.Clear();
             foreach (var file in files)
             {
-                Console.WriteLine("sarc file name " + file.FileName);
                 file.SaveFileFormat();
 
                 if (sarcData.HashOnly)
@@ -309,7 +308,6 @@ namespace FirstPlugin
                 for (int i = 0; i < names?.Count; i++)
                 {
                     uint hash = StringHashToUint(hashName);
-                    Console.WriteLine($"{FileName} {hash} {names[i]} {NameHash(names[i])}");
                     if (hash == NameHash($"{folder}/{names[i]}"))
                         return names[i];
                 }

@@ -184,7 +184,6 @@ namespace FirstPlugin
             {
                reader.SetByteOrder(true);
 
-                    Console.WriteLine("TEX pos " + reader.Position);
                     GX2Surface = new GX2.GX2Surface();
                     GX2Surface.dim = reader.ReadUInt32();
                     GX2Surface.width = reader.ReadUInt32();

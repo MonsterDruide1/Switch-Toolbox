@@ -264,8 +264,6 @@ namespace Bfres.Structs
                         if (bone.Text == boneName)
                         {
                             bone.Visible = group.GetValue(Frame);
-
-                            Console.WriteLine($"{Frame} {bone.Text} {bone.Visible}");
                         }
                     }
                 }

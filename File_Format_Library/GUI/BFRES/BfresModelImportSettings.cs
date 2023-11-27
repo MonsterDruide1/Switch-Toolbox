@@ -191,19 +191,6 @@ namespace FirstPlugin
         {
             Dictionary<string, FSHP.VertexAttribute> attribute = new Dictionary<string, FSHP.VertexAttribute>();
 
-            Console.WriteLine($"EnablePositions {EnablePositions}");
-            Console.WriteLine($"EnableNormals {EnableNormals}");
-            Console.WriteLine($"EnableVertexColors {EnableVertexColors}");
-            Console.WriteLine($"EnableUV0 {EnableUV0}");
-            Console.WriteLine($"EnableUV1 {EnableUV1}");
-            Console.WriteLine($"EnableUV2 {EnableUV2}");
-            Console.WriteLine($"EnableUV2 {EnableUV2}");
-            Console.WriteLine($"EnableTangents {EnableTangents}");
-            Console.WriteLine($"EnableTangents {EnableTangents}");
-            Console.WriteLine($"EnableBitangents {EnableBitangents}");
-            Console.WriteLine($"EnableWeights {EnableWeights}");
-            Console.WriteLine($"EnableIndices {EnableIndices}");
-
             if (EnablePositions)
             {
                 FSHP.VertexAttribute att = new FSHP.VertexAttribute();

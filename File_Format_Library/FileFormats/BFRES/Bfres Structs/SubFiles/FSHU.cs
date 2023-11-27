@@ -247,8 +247,6 @@ namespace Bfres.Structs
             if (matAnim.Params.Count == 0)
                 return;
 
-            Console.WriteLine("Playing anim " + Frame);
-
             //Loop through param list for shader param anims
             //These store a list of values with offsets to the value
             //Then we'll update the active texture

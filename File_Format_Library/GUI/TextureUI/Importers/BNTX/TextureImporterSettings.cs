@@ -356,11 +356,6 @@ namespace FirstPlugin
 
                 SurfaceSize += (uint)AlignedData.Length;
 
-              //  Console.WriteLine("SurfaceSize Aligned " + AlignedData);
-
-                Console.WriteLine("MipOffsets " + SurfaceSize);
-                Console.WriteLine("size " + size);
-
                 tex.MipOffsets[mipLevel] = SurfaceSize;
                 if (tex.TileMode == TileMode.LinearAligned)
                 {
@@ -382,8 +377,6 @@ namespace FirstPlugin
 
                 byte[] SwizzledData = TegraX1Swizzle.swizzle(width_, height_, depth_, blkWidth, blkHeight, blkDepth, target, bpp, (uint)tex.TileMode, (int)Math.Max(0, tex.BlockHeightLog2 - blockHeightShift), data_, size);
                 mipmaps.Add(AlignedData.Concat(SwizzledData).ToArray());
-
-                Console.WriteLine("SwizzledData " + SwizzledData.Length);
             }
             tex.ImageSize = SurfaceSize;
 

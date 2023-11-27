@@ -171,7 +171,6 @@ namespace FirstPlugin.Forms
                 int Red = 0, Green = 0, Blue = 0, Alpha = 255;
                 foreach (var track in paramAnim.Values)
                 {
-                    Console.WriteLine((ColorOffsets)track.AnimDataOffset + " " + track.GetValue(Frame) + " " + paramAnim.UniformName);
                     if ((ColorOffsets)track.AnimDataOffset == ColorOffsets.Red)
                     {
                         Red = Utils.FloatToIntClamp(track.GetValue(Frame));

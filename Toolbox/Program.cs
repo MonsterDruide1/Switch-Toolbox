@@ -13,6 +13,7 @@ using Toolbox.Library;
 using FirstPlugin;
 using CafeLibrary.M2;
 using Bfres.Structs;
+using Toolbox.Library.Animations;
 
 namespace Toolbox
 {
@@ -22,16 +23,13 @@ namespace Toolbox
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static int Main()
+        static int Main(string[] args)
         {
-            Console.WriteLine("STARTING!");
             AppDomain.CurrentDomain.AssemblyResolve += AssemblyResolve;
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Toolbox.Library.Runtime.ExecutableDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-
-            string[] args = Environment.GetCommandLineArgs();
 
             List<string> Args = new List<string>();
             foreach (var arg in args)
@@ -107,7 +105,7 @@ namespace Toolbox
                                 return 0;
                             }
                         }
-                        Console.WriteLine("Couldn't find model named " + Args[1]);
+                        Console.WriteLine("Couldn't find animation named " + Args[1]);
                         return 1;
                     }
                 default:

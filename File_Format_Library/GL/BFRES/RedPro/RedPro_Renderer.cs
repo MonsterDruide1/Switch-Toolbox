@@ -733,8 +733,6 @@ namespace FirstPlugin
 
                 if (mat.animatedMatParams[propertyName].Type == ShaderParamType.Float3)
                 {
-                    Console.WriteLine(propertyName + " " + mat.animatedMatParams[propertyName].ValueFloat);
-
                     if (mat.anims.ContainsKey(propertyName))
                     {
                         mat.animatedMatParams[propertyName].ValueFloat = new float[3] {

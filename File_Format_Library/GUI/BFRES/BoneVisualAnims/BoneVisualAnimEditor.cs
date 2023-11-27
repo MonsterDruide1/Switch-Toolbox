@@ -101,7 +101,6 @@ namespace FirstPlugin.Forms
                 {
                     rowIndex = this.dataGridView1.Rows.Add();
                     var row = this.dataGridView1.Rows[rowIndex];
-                    Console.WriteLine("rowIndex " + rowIndex);
 
                     row.Cells["FrameColumn"].Value = frame.ToString();
 

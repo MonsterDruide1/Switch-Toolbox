@@ -117,8 +117,6 @@ namespace FirstPlugin
                     else
                         reader.Seek((int)files[i].UncompressedSize);
 
-                //    Console.WriteLine($"{i} {files[i].DataOffset} {files[i].CompressedSize} {files[i].Alignment}");
-
                     if (files[i].Alignment != 0)
                         reader.Align((int)files[i].Alignment);
                 }

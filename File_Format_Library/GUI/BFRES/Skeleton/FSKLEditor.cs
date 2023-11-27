@@ -51,7 +51,6 @@ namespace FirstPlugin.Forms
 
                 rotationModeCB.SelectedItem = fskl.node.SkeletonU.FlagsRotation;
                 scalingModeCB.SelectedItem = fskl.node.SkeletonU.FlagsScaling;
-                Console.WriteLine("FlagsScaling " + fskl.node.SkeletonU.FlagsScaling);
             }
             else
             {
