@@ -73,9 +73,9 @@ namespace Toolbox
                     }
                 case "anim":
                     {
-                        if (Args.Count != 3)
+                        if (Args.Count != 3 && Args.Count != 4)
                         {
-                            Console.WriteLine("Usage: toolbox.exe model <src.bfres.zs> <name> <dest.smd> ; got: " + Args.Count + " args");
+                            Console.WriteLine("Usage: toolbox.exe model <src.bfres.zs> <name> [<model.bfres.zs>] <dest.smd> ; got: " + Args.Count + " args");
                             return 1;
                         }
 
@@ -87,12 +87,30 @@ namespace Toolbox
 
                         // prepare BFRESRender to make auto-selecting skeleton for animation possible
                         var Models = bfres.GetModels();
-                        if (Models != null)
+                        if (Models != null && Models.Count > 0)
                         {
                             foreach (FMDL mdl in Models)
                             {
                                 bfres.BFRESRender.models.Add(mdl);
                             }
+                        }
+                        else if (Args.Count == 4)
+                        {
+                            BFRES modelBfres = new BFRES();
+                            modelBfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(Zstb.SDecompress(File.ReadAllBytes(Args[2])))));
+                            var modelModels = modelBfres.GetModels();
+                            if (modelModels != null)
+                            {
+                                foreach (FMDL mdl in modelModels)
+                                {
+                                    bfres.BFRESRender.models.Add(mdl);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Expects either embedded model, or separate model file - got none of them.");
+                            return 1;
                         }
 
                         // search and export animation
@@ -100,7 +118,7 @@ namespace Toolbox
                         {
                             if (anim.SkeletalAnim.Name.Equals(Args[1]))
                             {
-                                anim.Export(Args[2]);
+                                anim.Export(Args[Args.Count-1]);
                                 Console.WriteLine("Found, successfully converted!");
                                 return 0;
                             }
