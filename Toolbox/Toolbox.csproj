@@ -76,6 +76,10 @@
       <HintPath>Lib\OpenTK.GLControl.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SARCExt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Downloads\Switch-Toolbox\Toolbox\Lib\SARCExt.dll</HintPath>
+    </Reference>
     <Reference Include="Syroot.BinaryData, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Downloads\Nintendo_Switch_BFRES_Library\Syroot.NintenTools.Bfres\bin\Debug\net46\Syroot.BinaryData.dll</HintPath>

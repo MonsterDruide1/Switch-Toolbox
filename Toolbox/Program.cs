@@ -14,11 +14,40 @@ using FirstPlugin;
 using CafeLibrary.M2;
 using Bfres.Structs;
 using Toolbox.Library.Animations;
+using SARCExt;
 
 namespace Toolbox
 {
     static class Program
     {
+
+        static byte[] loadBfres(string file)
+        {
+            if (file.EndsWith(".zs"))
+            {
+                return Zstb.SDecompress(File.ReadAllBytes(file));
+            }
+            else if (file.EndsWith(".szs"))
+            {
+                var szsFiles = SARCExt.SARC.UnpackRamN(EveryFileExplorer.YAZ0.Decompress(File.ReadAllBytes(file))).Files;
+                var bfres_name = file.Split('/').Last().Split('.')[0] + ".bfres";
+                if (szsFiles.ContainsKey(bfres_name))
+                {
+                    return szsFiles[bfres_name];
+                }
+                else
+                {
+                    Console.WriteLine("Main BFRES not found in " + file + ", expected "+bfres_name);
+                    return null;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Unknown file type for " + file);
+                return null;
+            }
+        }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -50,20 +79,34 @@ namespace Toolbox
             {
                 case "model":
                     {
-                        if (Args.Count != 3)
+                        if (Args.Count != 3 && Args.Count != 4)
                         {
-                            Console.WriteLine("Usage: toolbox.exe model <src.bfres.zs> <name> <dest.dae> ; got: " + Args.Count + " args");
+                            Console.WriteLine("Usage: toolbox.exe model <src.bfres.zs> <name> [<textures.bfres.zs>] <dest.dae> ; got: " + Args.Count + " args");
                             return 1;
                         }
 
-                        byte[] decomp = Zstb.SDecompress(File.ReadAllBytes(Args[0]));
+                        byte[] srcBfresData = loadBfres(Args[0]);
+                        if (srcBfresData == null) return 1;
+
                         BFRES bfres = new BFRES();
-                        bfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(decomp)));
+                        bfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(srcBfresData)));
+
+                        BFRES texture_bfres = new BFRES();
+                        if (Args.Count == 4)
+                        {
+                            byte[] textureBfresData = loadBfres(Args[2]);
+                            if (textureBfresData == null) return 1;
+                            for (int i = 0; i < 32; i++)
+                            {
+                                Console.WriteLine(textureBfresData[i]);
+                            }
+                            texture_bfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(textureBfresData)));
+                        }
                         foreach (Bfres.Structs.FMDL model in bfres.GetModels())
                         {
                             if (model.Model.Name.Equals(Args[1]))
                             {
-                                model.ExportSilent(Args[2]);
+                                model.ExportSilent(Args[Args.Count-1]);
                                 Console.WriteLine("Found, successfully converted!");
                                 return 0;
                             }
@@ -80,10 +123,12 @@ namespace Toolbox
                         }
 
                         // load BFRES file
-                        byte[] decomp = Zstb.SDecompress(File.ReadAllBytes(Args[0]));
+                        byte[] srcBfresData = loadBfres(Args[0]);
+                        if (srcBfresData == null) return 1;
+
                         BFRES bfres = new BFRES();
                         bfres.BFRESRender = new BFRESRender();
-                        bfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(decomp)));
+                        bfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(srcBfresData)));
 
                         // prepare BFRESRender to make auto-selecting skeleton for animation possible
                         var Models = bfres.GetModels();
@@ -97,7 +142,11 @@ namespace Toolbox
                         else if (Args.Count == 4)
                         {
                             BFRES modelBfres = new BFRES();
-                            modelBfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(Zstb.SDecompress(File.ReadAllBytes(Args[2])))));
+
+                            byte[] modelBfresData = loadBfres(Args[2]);
+                            if (modelBfresData == null) return 1;
+
+                            modelBfres.LoadFile(new Syroot.NintenTools.NSW.Bfres.ResFile(new MemoryStream(modelBfresData)));
                             var modelModels = modelBfres.GetModels();
                             if (modelModels != null)
                             {
